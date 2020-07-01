@@ -8,10 +8,21 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
+  devServer:{
+    host:'localhost',
+    port:8080,
+    proxy:{
+        '/api':{
+            target:'http://mall-pre.springboot.cn',
+            changeOrigin:true,
+            pathRewrite:{
+                '/api':''
+            }
+        }
+    }
+},
   entry: {
     app: './src/main.js'
   },

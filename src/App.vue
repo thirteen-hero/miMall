@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted(){
-    this.axios.get('/public/login.json').then(res=>this.res=res)
+    //this.axios.get('/mock/user/login.json').then(res=>this.res=res)
   }
 }
 </script>
