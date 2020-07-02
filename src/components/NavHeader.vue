@@ -139,11 +139,12 @@ export default {
         },
         getProductList(){
             this.axios.get('/manage/product/list.do',{
-                categoryId:'3'
-            }).then((res)=>{
-                if(res.list.length>6){
-                    this.phoneList=res.list.slice(0,6)
+                params:{
+                    categoryId:'3',
+                    pageSize:6
                 }
+            }).then((res)=>{
+                    this.phoneList=res.list
             })
         },
         goToCart(){
@@ -234,6 +235,7 @@ export default {
                             }
                         }
                         .children{
+                            background-color: #ffffff;
                             position: absolute;
                             top: 112px;
                             left: 0;
