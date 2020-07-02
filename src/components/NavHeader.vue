@@ -9,9 +9,10 @@
                     <a href="javascript:;">协议规则</a>
                 </div>
                 <div class="topbar-user">
-                    <a href="javascript:;">登录</a>
-                    <a href="javascript:;">注册</a>
-                    <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车</a>
+                    <a href="javascript:;" v-if="username">{{username}}</a>
+                    <a href="javascript:;" v-if="!username" @click="login">登录</a>
+                    <a href="javascript:;">我的订单</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车</a>
                 </div>
             </div>
         </div>
@@ -23,7 +24,7 @@
                 <div class="header-menu">
                     <div class="item-menu">
                         <span>小米手机</span>
-                        <div class="children">
+                        <!-- <div class="children">
                             <ul>
                                 <li class="product" v-for="(item,index) in phoneList" :key="index">
                                     <a :href="'/#/product/'+item.id" target="_blank">
@@ -35,7 +36,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="item-menu">
                         <span>Redmi红米</span>
@@ -117,8 +118,9 @@ export default {
     name:'nav-header',
     data(){
         return{
-            username:'thirteen',
-            phoneList:[]
+            username:'',
+            phoneList:[],
+            res:''
         }
     },
     filters:{
@@ -129,8 +131,12 @@ export default {
     },
     mounted(){
         //this.getProductList();
+        //this.axios.get('/manage/product/list.do').then(res=>this.res=res) 
     },
     methods:{
+        login(){
+            this.$router.push('/login')
+        },
         getProductList(){
             this.axios.get('/manage/product/list.do',{
                 categoryId:'3'
@@ -139,6 +145,9 @@ export default {
                     this.phoneList=res.list.slice(0,6)
                 }
             })
+        },
+        goToCart(){
+            this.$router.push('/cart')
         }
     }
 }
