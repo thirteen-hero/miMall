@@ -48,7 +48,7 @@
                                 <li class="product">
                                     <a href="" target="_blank">
                                         <div class="pro-img">
-                                            <img src="~@/../static/imgs/nav-img/nav-3-1.jpg" alt="">
+                                            <img src="/static/imgs/nav-img/nav-3-1.jpg" alt="">
                                         </div>
                                         <div class="pro-name">小米壁画电视 65英寸</div>
                                         <div class="pro-price">6999元</div>
@@ -57,7 +57,7 @@
                                 <li class="product">
                                     <a href="" target="_blank">
                                         <div class="pro-img">
-                                            <img src="~@/../static/imgs/nav-img/nav-3-2.jpg" alt="">
+                                            <img src="/static/imgs/nav-img/nav-3-2.jpg" alt="">
                                         </div>
                                         <div class="pro-name">小米全面屏电视</div>
                                         <div class="pro-price">1999元</div>
@@ -66,7 +66,7 @@
                                 <li class="product">
                                     <a href="" target="_blank">
                                         <div class="pro-img">
-                                            <img src="~@/../static/imgs/nav-img/nav-3-3.png" alt="">
+                                            <img src="/static/imgs/nav-img/nav-3-3.png" alt="">
                                         </div>
                                         <div class="pro-name">小米电视4A 32英寸</div>
                                         <div class="pro-price">699元</div>
@@ -75,7 +75,7 @@
                                 <li class="product">
                                     <a href="" target="_blank">
                                         <div class="pro-img">
-                                            <img src="~@/../static/imgs/nav-img/nav-3-4.jpg" alt="">
+                                            <img src="/static/imgs/nav-img/nav-3-4.jpg" alt="">
                                         </div>
                                         <div class="pro-name">小米电视4A 55英寸</div>
                                         <div class="pro-price">1799元</div>
@@ -84,7 +84,7 @@
                                 <li class="product">
                                     <a href="" target="_blank">
                                         <div class="pro-img">
-                                            <img src="~@/../static/imgs/nav-img/nav-3-5.jpg" alt="">
+                                            <img src="/static/imgs/nav-img/nav-3-5.jpg" alt="">
                                         </div>
                                         <div class="pro-name">小米电视4A 65英寸</div>
                                         <div class="pro-price">2699元</div>
@@ -93,7 +93,7 @@
                                 <li class="product">
                                     <a href="" target="_blank">
                                         <div class="pro-img">
-                                            <img src="~@/../static/imgs/nav-img/nav-3-6.png" alt="">
+                                            <img src="/static/imgs/nav-img/nav-3-6.png" alt="">
                                         </div>
                                         <div class="pro-name">查看全部</div>
                                         <div class="pro-price">小米电视</div>
@@ -176,7 +176,7 @@ export default {
                     text-align: center;
                     color: #ffffff;
                     .icon-cart{
-                        @include bgImg(16px,12px,'~@/../static/imgs/icon-cart-checked.png');
+                        @include bgImg(16px,12px,'/static/imgs/icon-cart-checked.png');
                         margin-right: 4px;
                     }
                 }
@@ -198,12 +198,12 @@ export default {
                         height: 55px;
                         &:before{
                             content:'';
-                            @include bgImg(55px,55px,'~@/../static/imgs/mi-logo.png',55px);
+                            @include bgImg(55px,55px,'/static/imgs/mi-logo.png',55px);
                             transition: margin .2s;
                         }
                         &:after{
                             content:'';
-                            @include bgImg(55px,55px,'~@/../static/imgs/mi-home.png',55px);
+                            @include bgImg(55px,55px,'/static/imgs/mi-home.png',55px);
                         }
                         &:hover:before{
                             margin-left: -55px;
@@ -303,7 +303,7 @@ export default {
                             padding-left: 14px;
                         }
                         a{
-                            @include bgImg(18px,18px,'~@/../static/imgs/icon-search.png');
+                            @include bgImg(18px,18px,'/static/imgs/icon-search.png');
                             margin-left: 17px;
                         }
                     }
