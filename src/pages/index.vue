@@ -71,14 +71,14 @@
                     <div class="list-box">
                         <div class="list" v-for="(arr,index) in phoneList" :key="index">
                             <div class="item" v-for="(item,key) in arr" :key="key">
-                                <span>新品</span>
+                                <span :class="{'new-pro':key%2==0}">新品</span>
                                 <div class="item-img">
-                                    <img src="" alt="">
+                                    <img :src="item.mainImage" alt="">
                                 </div>
                                 <div class="item-info">
-                                    <h3>小米9</h3>
-                                    <p>骁龙855，索尼4800万超广角微距</p>
-                                    <p class="price">2999元</p>
+                                    <h3>{{item.name}}</h3>
+                                    <p>{{item.subtitle}}</p>
+                                    <p class="price">{{item.price}}元</p>
                                 </div>
                             </div>
                         </div>
@@ -88,10 +88,21 @@
             </div>
         </div>
         <service-bar></service-bar>
+        <modal 
+            title="提示" 
+            sureText="查看购物车" 
+            btnType="1" 
+            modalType="middle"
+            :showModel="true">
+            <template v-slot:body>
+                <p>商品添加成功！</p>
+            </template>
+        </modal>
     </div>
 </template>
 <script>
 import ServiceBar from './../components/ServiceBar'
+import Modal from './../components/Modal'
 import {Swiper,SwiperSlide,directive} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 export default {
@@ -99,7 +110,8 @@ export default {
     components:{
         Swiper,
         SwiperSlide,
-        ServiceBar
+        ServiceBar,
+        Modal
     },
     directives:{
         swiper:directive
@@ -191,9 +203,23 @@ export default {
                     img:'/static/imgs/ads/ads-4.jpg'
                 }
             ],
-            phoneList:[
-                [1,1,1,1],[1,1,1,1]
-            ]
+            phoneList:[[1,1,1,1],[1,1,1,1]]
+        }
+    },
+    mounted(){
+        //this.init();
+    },
+    methods:{
+        init(){
+            this.axios.get('/manage/product/list.do',{
+                params:{
+                    categoryId:100012,
+                    pageSize:14
+                }
+            }).then((res)=>{
+                res.list = res.list.slice(6 ,14);
+                this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]
+            })
         }
     }
 }
@@ -328,11 +354,23 @@ export default {
                         background-color: $colorG;
                         text-align: center;
                         span{
-
+                            display: inline-block;
+                            width: 67px;
+                            height: 24px;
+                            font-size: 14px;
+                            line-height: 24px;
+                            color: #ffffff;
+                            &.new-pro{
+                                background-color: #7ecf68;
+                            }
+                            &.kill-pro{
+                                background-color: #e82626;
+                            }
                         }
                         .item-img{
                             img{
                                 height: 195px;
+                                width: 100%;
                             }
                         }
                         .item-info{
