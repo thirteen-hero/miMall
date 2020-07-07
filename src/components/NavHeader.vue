@@ -24,19 +24,19 @@
                 <div class="header-menu">
                     <div class="item-menu">
                         <span>小米手机</span>
-                        <!-- <div class="children">
+                        <div class="children">
                             <ul>
                                 <li class="product" v-for="(item,index) in phoneList" :key="index">
                                     <a :href="'/#/product/'+item.id" target="_blank">
                                         <div class="pro-img">
-                                            <img v-lazy="item.mainimage" :alt="item.subtitle">
+                                            <img v-lazy="item.mainImage" :alt="item.subtitle">
                                         </div>
                                         <div class="pro-name">{{item.name}}</div>
                                         <div class="pro-price">{{item.price | currency}}</div>
                                     </a>
                                 </li>
                             </ul>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="item-menu">
                         <span>Redmi红米</span>
@@ -130,17 +130,16 @@ export default {
         }
     },
     mounted(){
-        //this.getProductList();
-        //this.axios.get('/manage/product/list.do').then(res=>this.res=res) 
+        this.getProductList(); 
     },
     methods:{
         login(){
             this.$router.push('/login')
         },
         getProductList(){
-            this.axios.get('/manage/product/list.do',{
+            this.axios.get('/products',{
                 params:{
-                    categoryId:'3',
+                    categoryId:'100012',
                     pageSize:6
                 }
             }).then((res)=>{

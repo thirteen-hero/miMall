@@ -210,11 +210,11 @@ export default {
         }
     },
     mounted(){
-        //this.init();
+        this.init();
     },
     methods:{
         init(){
-            this.axios.get('/manage/product/list.do',{
+            this.axios.get('/products',{
                 params:{
                     categoryId:100012,
                     pageSize:14
