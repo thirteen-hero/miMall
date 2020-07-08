@@ -51,6 +51,7 @@ export default {
                 password
             }).then((res)=>{
                 this.$cookie.set('userId',res.id,{expires:'1M'})
+                this.$store.dispatch('saveUserName',res.username)
                 this.$router.push('/index');
             })
         },
@@ -58,7 +59,7 @@ export default {
             this.axios.post('/user/register',{
                 username:'thirteen-hero',
                 password:'123456',
-                email:'thiteen-hero@163.com'
+                email:'thirteen-hero@163.com'
             }).then(()=>{
                 alert('注册成功！')
             })

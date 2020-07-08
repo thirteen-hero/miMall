@@ -13,11 +13,24 @@ export default {
   },
   data(){
     return{
-      res:''
+    
     }
   },
   mounted(){
-    //this.axios.get('/mock/user/login.json').then(res=>this.res=res)
+    this.getUser();
+    this.getCartCount();
+  },
+  methods:{
+    getUser(){
+      this.axios.get('/user').then((res)=>{
+        this.$store.dispatch('saveUserName',res.username)
+      })
+    },
+    getCartCount(){
+      this.axios.get('/carts/products/sum').then((res)=>{
+        this.$store.dispatch('saveCartCount',res)
+        })
+    }
   }
 }
 </script>
