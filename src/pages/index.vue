@@ -205,7 +205,7 @@ export default {
                     img:'/static/imgs/ads/ads-4.jpg'
                 }
             ],
-            phoneList:[[1,1,1,1],[1,1,1,1]],
+            phoneList:'',
             showModal:false,
         }
     },
@@ -225,16 +225,15 @@ export default {
             })
         },
         addCart(id){
-            this.showModal = true;
-            return;
-            // this.axios.post('/carts',{
-            //     productId:id,
-            //     selectedAll:true
-            // }).then((res)=>{
-
-            // }).catch(()=>{
-            //     this.showModal = true;
-            // })
+            this.axios.post('/carts',{
+                productId:id,
+                selected:true
+            }).then((res)=>{
+                this.showModal = true
+                this.$store.dispatch('saveCartCount',res.cartTotalQuantity)
+            }).catch(()=>{
+                this.showModal = true;
+            })
         },
         gotoCart(){
             this.$router.push('/cart')
