@@ -88,7 +88,7 @@
                     this.renderData(res)
                 })
             },
-            //切换商品全选和不选状态
+            //切换商品全选和全不选状态
             toggleAll(){
                 let url = this.allChecked?'/carts/unSelectAll':'/carts/selectAll';
                 this.axios.put(url).then((res)=>{
@@ -111,7 +111,7 @@
                             alert('商品至少保留一件')
                             return;
                         }
-                        --quantity;
+                        --quantity; 
                     }else if(type == '+'){
                         if(quantity > item.productStock){
                             alert('商品购买数量不能超过库存数量')
@@ -136,7 +136,13 @@
             },
             //购物车下单
             order(){
-                this.$router.push('/order/confirm');
+                //购物车里面没有一件商品被选中
+                let isCheck = this.list.every(item=>!item.productSelected);
+                if(isCheck){
+                    alert('请选择一件商品')
+                }else{
+                    this.$router.push('/order/confirm');
+                }
             }
         }
     }
