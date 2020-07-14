@@ -4,7 +4,9 @@ import VueAxios from 'vue-axios'
 import router from './router'
 import VueLazyLoad from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
+import {Message} from 'element-ui'
 import store from './store'
+import 'element-ui/lib/theme-chalk/index.css'
 
 import App from './App'
 
@@ -23,17 +25,20 @@ axios.interceptors.response.use(function(response){
     }
     return Promise.reject(res);
   }else{
-    alert(res.msg);
+    Message.warning(res.msg)
     return Promise.reject(res);
   }
 })
 
 Vue.use(VueAxios,axios)
-Vue.config.productionTip = false
+Vue.use(VueCookie)
 Vue.use(VueLazyLoad,{
   loading:'/static/imgs/loading-svg/loading-bars.svg'
 })
-Vue.use(VueCookie)
+
+Vue.config.productionTip = false
+Vue.prototype.$message = Message
+
 
 /* eslint-disable no-new */
 new Vue({
