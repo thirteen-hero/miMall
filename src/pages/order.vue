@@ -18,8 +18,8 @@ export default {
     name:'order',
     components:{
         OrderHeader,
-        NavFooter,
-        ServiceBar
+        ServiceBar,
+        NavFooter
     },
     data(){
         return{
@@ -35,7 +35,7 @@ export default {
         }else if(path == '/order/list'){
             this.title = '订单列表',
             this.tip = '请谨防钓鱼链接或诈骗电话，了解更多>'
-        }else if(path == '/order/pay'){
+        }else{
             this.title = '订单支付',
             this.tip = '请谨防钓鱼链接或诈骗电话，了解更多>'
         }
