@@ -18,7 +18,7 @@
                     <div class="item-detail" v-if="showDetail">
                         <div class="item">
                             <div class="detail-title">订单号：</div>
-                            <div class="detail-info theme-color">{{orderNo}}</div>
+                            <div class="detail-info theme-color">{{orderId}}</div>
                         </div>
                         <div class="item">
                             <div class="detail-title">收货信息：</div>
@@ -50,40 +50,99 @@
                 </div>
             </div>
         </div>
+        <scan-pay-code v-if="showPay" @close="closePayModal" :img="payImg"></scan-pay-code>
+        <modal
+            title="支付确认"
+                btnType="3"
+                :showModel="showPayModal"
+                sureText="查看订单"
+                cancelText="未支付"
+                @cancel="showPayModal=false"
+                @submit="goOrderList"
+        >       
+            <template v-slot:body>
+                <p>您确认是否完成支付？</p>
+            </template>
+        </modal>
     </div>
 </template>
 <script>
-import OrderHeader from './../components/OrderHeader'
+import QRCode from 'qrcode'
+import ScanPayCode from './../components/ScanPayCode'
+import Modal from './../components/Modal'
 export default{
     name:'order-pay',
     data(){
         return {
-            orderNo:this.$route.query.orderNo,
+            orderId:this.$route.query.orderNo,
             addressInfo:'',//收货人地址
+            orderDetail:[],//订单详情，包含商品列表
             showDetail:false,//是否显示订单详情
-            payType:'',//支付类型
             showPay:false,//是否显示微信支付弹框
-            orderDetail:[],//订单详情 包含商品列表
+            payType:'',//支付类型
+            payImg:'',//微信支付的二维码地址
+            showPayModal:false,//是否显示二次支付确认弹框
+            totalMoney:0,//订单支付总金额
+            T:''//定时器Id
         }
     },
     components:{
-        OrderHeader, 
+        ScanPayCode,
+        Modal
     },
     mounted(){
         this.getOrderDetail()
     },
     methods:{
         getOrderDetail(){
-            this.axios.get(`/orders/${this.orderNo}`).then((res)=>{
+            this.axios.get(`/orders/${this.orderId}`).then((res)=>{
                 let item = res.shippingVo
                 this.addressInfo = `${item.receiverName} ${item.receiverMobile} ${item.receiverProvince} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress} ${item.receiverZip} `
-                this.orderList = res.orderItemVoList
+                this.orderDetail = res.orderItemVoList
+                this.totalMoney = res.payment
             })
         },
         paySubmit(payType){
             if(payType == 1){
-                window.open('/#/order/alipay?orderId='+this.orderNo,'_blank')
+                window.open('/#/order/alipay?orderId='+this.orderId,'_blank')
+            }else{
+                this.axios.post('/pay',{
+                orderId:this.orderId,
+                orderName:'vue高仿小米商城',
+                amount:0.01,//单位：元
+                payType:2//1 支付宝 2 微信
+                }).then((res)=>{
+                    QRCode.toDataURL(res.content)
+                    .then(url=>{
+                        this.showPay = true,
+                        this.payImg = url
+                        this.loopOrderState()
+                    })
+                    .catch(()=>{
+                        this.$message.error('二维码生成失败，请稍后再试')
+                    })
+                })
             }
+        },
+        //关闭微信弹框
+        closePayModal(){
+            this.showPay = false
+            this.showPayModal = true
+            clearInterval(this.T)
+        },
+        //轮询当前订单支付状态
+        loopOrderState(){
+            this.T = setInterval(() => {
+                this.axios.get(`/orders/${this.orderId}`).then((res)=>{
+                    if(res.status == 20){
+                        clearInterval(this.T)
+                        this.goOrderList()
+                    }
+                })
+            }, 1000);
+        },
+        goOrderList(){
+            this.$router.push('/order/list')
         }
     }
 }
