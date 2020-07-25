@@ -1,5 +1,10 @@
 <template>
     <div class="order-confirm">
+        <order-header title="订单确认">
+            <template v-slot:tip>
+                <span>请认真填写收货地址</span>
+            </template>
+        </order-header>
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0px; height: 0px; overflow: hidden;">
             <defs>
                 <symbol id="icon-add" viewBox="0 0 31 32">
@@ -50,7 +55,7 @@
                             <li v-for="(item,index) in cartList" :key="index">
                                 <div class="good-name">
                                     <img v-lazy="item.productMainImage" alt="">
-                                    <span>{{item.productName+''+item.productSubbtitle}}</span>
+                                    <span>{{item.productName+''+item.productSubtitle}}</span>
                                 </div>
                                 <div class="good-price">{{item.productPrice}}元x{{item.quantity}}</div>
                                 <div class="good-total">{{item.productTotalPrice}}元</div>
