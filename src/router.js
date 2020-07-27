@@ -2,15 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './pages/home'
 import Index from './pages/index'
-import Product from './pages/product'
-import Detail from './pages/detail'
-import Cart from './pages/cart'
-import Order from './pages/order'
-import OrderList from './pages/OrderList'
-import OrderConfirm from './pages/OrderConfirm'
-import OrderPay from './pages/OrderPay'
-import AliPay from './pages/aliPay'
-import Login from './pages/login'
 
 Vue.use(Router)
 
@@ -30,49 +21,49 @@ export default new Router({
                 {
                     path:'/product/:id',
                     name:'product',
-                    component:Product
+                    component:(resolve=>require(['./pages/product.vue']),resolve)
                 },
                 {
                     path:'/detail/:id',
                     name:'detail',
-                    component:Detail
+                    component:resolve=>require(['./pages/detail.vue'],resolve)
                 }
             ]
         },
         {
             path:'/login',
             name:'login',
-            component:Login
+            component:resolve=>require(['./pages/login.vue'],resolve)
         },
         {
             path:'/cart',
             name:'cart',
-            component:Cart
+            component:resolve=>require(['./pages/cart.vue'],resolve)
         },
         {
             path:'/order',
             name:'order',
-            component:Order,
+            component:resolve=>require(['./pages/order.vue'],resolve),
             children:[
                 {
                     path:'list',
                     name:'order-list',
-                    component:OrderList
+                    component:resolve=>require(['./pages/orderList.vue'],resolve)
                 },
                 {
                     path:'confirm',
                     name:'order-confirm',
-                    component:OrderConfirm
+                    component:resolve=>require(['./pages/orderConfirm.vue'],resolve)
                 },
                 {
                     path:'pay',
                     name:'order-pay',
-                    component:OrderPay
+                    component:resolve=>require(['./pages/orderPay.vue'],resolve)
                 },
                 { 
                     path:'alipay',
                     name:'alipay',
-                    component:AliPay
+                    component:resolve=>require(['./pages/aliPay.vue'],resolve)
                 }
             ]
         }

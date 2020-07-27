@@ -49,7 +49,6 @@
                     <!-- 分页方式  -->
                     <el-pagination
                         class="pagination"
-                        v-if="false"
                         background
                         layout="prev, pager, next"
                         :page-size="pageSize"
@@ -69,6 +68,7 @@
                         v-infinite-scroll="scrollMore"
                         infinite-scroll-disabled="busy"
                         infinite-scroll-distance="410"
+                        v-if="false"
                     >
                         <img src="/static/imgs/loading-svg/loading-spinning-bubbles.svg" alt="" v-show="loading">
                     </div>
